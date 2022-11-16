@@ -29,6 +29,12 @@ IF NOT DEFINED LIB (IF EXIST "%VC_PATH%" (call "%VC_PATH%\VC\Auxiliary\Build\vcv
 SET VC_PATH=C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional
 IF NOT DEFINED LIB (IF EXIST "%VC_PATH%" (call "%VC_PATH%\VC\Auxiliary\Build\vcvarsall.bat" amd64))
 
+SET VC_PATH=C:\Program Files\Microsoft Visual Studio\2022\Community
+IF NOT DEFINED LIB (IF EXIST "%VC_PATH%" (call "%VC_PATH%\VC\Auxiliary\Build\vcvarsall.bat" amd64))
+
+SET VC_PATH=C:\Program Files\Microsoft Visual Studio\2022\Professional
+IF NOT DEFINED LIB (IF EXIST "%VC_PATH%" (call "%VC_PATH%\VC\Auxiliary\Build\vcvarsall.bat" amd64))
+
 IF NOT DEFINED LIB ( 
     echo Unable to find Visual Studio installation. Execute vcvarsall.bat amd64 in the shell before building
     EXIT /B 1
