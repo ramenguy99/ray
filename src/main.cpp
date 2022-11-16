@@ -220,120 +220,6 @@ int main(int argc,char** argv)
     //Transform to Z up
     TransformMeshVertices(&Dragon, ModelMatrix);
     
-#if 0
-    PushMaterial(&World, vec3(1.f, 1.0f, 1.0f), vec3(0.0f), 0.5f);
-    PushMaterial(&World, vec3(0.0f), vec3(1.0f), 0.0f);
-    PushMaterial(&World,  vec3(0.3f, 1.0f, 0.3f), vec3(0.0f), 0.1f);
-    PushMaterial(&World,  vec3(0.3f, 0.3f, 1.0f), vec3(0.0f), 0.1f);
-    PushMaterial(&World,  vec3(1.0f, 0.0f, 0.0f), vec3(0.0f), 0.1f);
-    
-    PushMaterial(&World, vec3(0.804f, 0.498f, 0.196f), vec3(0.0f), 0.7f);
-    PushMaterial(&World, vec3(1.0f, 1.0f, 1.0f), vec3(0.0f), 1.0f);
-    PushMaterial(&World, vec3(0.3f, 0.6f, 0.9f), vec3(0.0f), 0.8f);
-    //PushMaterial(&World, vec3(1.0f, 0.843f, 0.0f), vec3(0.0f), 0.7f);
-    
-    //PushMaterial(&World, vec3(1.0f, 0.7f, 0.7f), vec3(0.0f), 1.5f, false);
-    
-    PushPlane(&World, vec3(0, 0, 1), 0.0f, 2);
-    PushPlane(&World, vec3(0, 0, -1), -3.0f, 1);
-    
-    PushPlane(&World, vec3(0, -1, 0), -2.0f, 0);
-    PushPlane(&World, vec3(1, 0, 0), -2.0f, 3);
-    PushPlane(&World, vec3(-1, 0, 0), -2.0f, 4);
-    
-    PushMeshInfo(&World, &Dragon);
-    
-    PushMesh(&World, 0, vec3(-1.0f, -2.0f, 0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(0.15f), 5);
-    PushMesh(&World, 0, vec3(0.0f,  -2.0f, 0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(0.15f), 6);
-    PushMesh(&World, 0, vec3(1.0f,  -2.0f, 0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(0.15f), 7);
-    
-    
-    //Init camera
-    vec3 CameraP = vec3(0, -8, 1);
-    vec3 CameraZ = Normalize(vec3(0, 0, 0.7f) - CameraP);
-    vec3 CameraX = Normalize(Cross(vec3(0, 0, 1), CameraZ));
-    vec3 CameraY = Normalize(Cross(CameraZ, CameraX));
-#elif 0
-    //Plane
-    PushMaterial(&World, vec3(1.f, 1.0f, 1.0f), vec3(0.0f), 0.5f);
-    //PushMaterial(&World, vec3(0.0f), vec3(1.0f), 0.0f);
-    
-    //Dragons
-    PushMaterial(&World, vec3(0.3f, 0.6f, 0.9f), vec3(0.0f), 0.8f);
-    PushMaterial(&World, vec3(1, 1, 1), vec3(0.0f), 1.0f);
-    PushMaterial(&World, vec3(0.804f, 0.498f, 0.196f), vec3(0.0f), 0.9f);
-//    PushMaterial(&World, vec3(1, 1, 1), vec3(0.0f), 1.1f, true);
-    
-    //Spheres
-    u32 FirstSphereMaterial = World.MaterialsCount;
-    PushMaterial(&World, vec3(1,1,1), vec3(0), 1.0f);
-    PushMaterial(&World, vec3(1,0,0), vec3(0), 0.1f);
-    PushMaterial(&World, vec3(0,1,0), vec3(0), 0.8f);
-    PushMaterial(&World, vec3(0,0,1), vec3(0), 0.2f);
-    
-    PushMaterial(&World, vec3(0.3f,0.2f,0.6f), vec3(0), 0.2f);
-    PushMaterial(&World, vec3(1.0f,0.2f,0.1f), vec3(0), 0.3f);
-    PushMaterial(&World, vec3(1.0f,0.6f,0.1f), vec3(0), 0.8f);
-    PushMaterial(&World, vec3(0.3f, 1, 0.8f), vec3(0), 0.6f);
-    
-    u32 SphereMaterialsCount = World.MaterialsCount - FirstSphereMaterial;
-    
-    random_series ColSeries = RandSeries(324634);
-    random_series PosSeries = RandSeries(3634);
-    random_series SizeSeries = RandSeries(33);
-    
-    u32 SpheresX = 7;
-    u32 SpheresY = 7;
-    For(y, SpheresY)
-    {
-        For(x, SpheresX)
-        {
-#if 0
-            f32 H = RandRange(&ColSeries, 0.0f, 360.0f);
-            f32 S = RandRange(&ColSeries, 0.5f, 1.0f);
-            f32 V = RandRange(&ColSeries, 0.5f, 1.0f);
-            vec3 Color = HSVToRGB(H, 1, 1);
-            PushMaterial(&World, vec3(Color), vec3(0), Color.a);
-#endif
-            f32 Radius = RandRange(&SizeSeries, 0.3f, 1.0f);
-            f32 Off = 0.5f;
-            
-            if(x == 2 && y == 2) {
-                Radius *= 0.5f;
-            }
-            
-            vec3 Position;
-            Position.x = (f32)x / SpheresX * 20 - 8 + RandRange(&PosSeries, -Off, Off);
-            Position.y = (f32)y / SpheresY * 20 - 8 + RandRange(&PosSeries, -Off, Off);
-            Position.z = Radius;
-            
-            
-            u32 Material = RandU32(&ColSeries) % SphereMaterialsCount + FirstSphereMaterial;
-            
-            PushSphere(&World, Position, Radius, Material);
-        }
-    }
-    
-    PushPlane(&World, vec3(0, 0, 1), 0.0f, 0);
-    //PushSphere(&World, vec3(0, 0, 0), 1.0f, 1);
-    
-    PushMeshInfo(&World, &Dragon);
-    
-    f32 DragonScale = 0.3f;
-    PushMesh(&World, 0, vec3(-3.0f, 0.0f, 0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(DragonScale), 1);
-    PushMesh(&World, 0, vec3(0.0f,  0.0f, 0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(DragonScale), 2);
-    PushMesh(&World, 0, vec3(3.0f,  0.0f, 0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(DragonScale), 3);
-    
-    
-    //Init camera
-    vec3 CameraP = vec3(-8, -8, 8);
-    vec3 CameraZ = Normalize(vec3(0, 0, 0) - CameraP);
-    
-    
-    vec3 CameraX = Normalize(Cross(vec3(0, 0, 1), CameraZ));
-    vec3 CameraY = Normalize(Cross(CameraZ, CameraX));
-#elif 1
-    
     PushMaterial(&World, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f), 0.1f);
     PushMaterial(&World, vec3(0.7f, 0.5f, 0.3f), vec3(0.0f), 0.3f);
     PushMaterial(&World, vec3(0.3f, 0.6f, 0.9f), vec3(0.0f), 0.8f);
@@ -344,25 +230,16 @@ int main(int argc,char** argv)
     PushMaterial(&World, vec3(0.3f, 0.6f, 0.9f), vec3(0.0f), 0.8f);
     PushMaterial(&World, vec3(0.804f, 0.498f, 0.196f), vec3(0.0f), 0.9f);
     
-//    PushMaterial(&World, vec3(1.0f, 1.0f, 1.0f), vec3(0.0f), 1.0f, true);
-//    PushMaterial(&World, vec3(1.0f, 0.7f, 0.7f), vec3(0.0f), 1.1f, false);
-//    PushMaterial(&World, vec3(1.0f, 1.0f, 1.0f), vec3(0.0f), 1.0f, true);
-    
-    
     PushPlane(&World, vec3(0, 0, 1), 0.0f, 0);
-//    PushSphere(&World, vec3(-2, 1, 1), 0.7f, 2);
-//    PushSphere(&World, vec3(4, -0.3f, 0), 2.0f, 3);
     PushSphere(&World, vec3(5.5, 7, 2.5), 2.5f, 4);
     PushSphere(&World, vec3(-5.5, 7, 2.5), 2.5f, 4);
     
     PushMeshInfo(&World, &Dragon);
-    //PushMesh(&World, 0, vec3(0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(0.3f), 4);
     f32 DragonBigScale = 0.3f;
     f32 DragonSmallScale = 0.20f;
     PushMesh(&World, 0, vec3(-2.0f, 0.0f, 0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(DragonSmallScale), 5);
     PushMesh(&World, 0, vec3(0.0f,  0.0f, 0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(DragonBigScale), 4);
     PushMesh(&World, 0, vec3(2.0f,  0.0f, 0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(DragonSmallScale), 6);
-    
     
     //Spheres
     u32 FirstSphereMaterial = World.MaterialsCount;
@@ -413,31 +290,6 @@ int main(int argc,char** argv)
     vec3 CameraX = Normalize(Cross(vec3(0, 0, 1), CameraZ));
     vec3 CameraY = Normalize(Cross(CameraZ, CameraX));
     
-#else
-    
-    PushMaterial(&World, vec3(0.5f, 0.5f, 0.5f), vec3(0.0f), 0.1f);
-    PushMaterial(&World, vec3(0.7f, 0.5f, 0.3f), vec3(0.0f), 0.3f);
-    PushMaterial(&World, vec3(0.3f, 0.6f, 0.9f), vec3(0.0f), 0.8f);
-    PushMaterial(&World, vec3(0.0f), vec3(0.9f, 0.0, 0.0f), 0.0f);
-    PushMaterial(&World, vec3(1.0f, 1.0f, 1.0f), vec3(0.0f), 1.0f, true);
-    
-    
-    PushPlane(&World, vec3(0, 0, 1), 0.0f, 0);
-    PushSphere(&World, vec3(-2, 1, 1), 0.7f, 2);
-    PushSphere(&World, vec3(4, -0.3f, 0), 2.0f, 3);
-    PushSphere(&World, vec3(3, 5, 2), 2.0f, 4);
-    PushSphere(&World, vec3(-5, 6, 2), 2.0f, 4);
-    
-    PushMeshInfo(&World, &Dragon);
-    PushMesh(&World, 0, vec3(0.0f), Mat3Rotate(vec3(0.0f, 0.0f, 1.0f), 90.0f), vec3(0.3f), 4);
-
-    //Init camera
-    vec3 CameraP = vec3(0, -10, 1);
-    vec3 CameraZ = Normalize(vec3(0, 0, 1) - CameraP);
-    vec3 CameraX = Normalize(Cross(vec3(0, 0, 1), CameraZ));
-    vec3 CameraY = Normalize(Cross(CameraZ, CameraX));
-    
-#endif
     //Preprocess meshes
     PreprocessWorldMeshes(&World, PreprocessingOnly);
     if(PreprocessingOnly) {
